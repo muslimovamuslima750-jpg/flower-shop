@@ -1,0 +1,62 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}Каталог — الزهور{% endblock %}
+
+{% block content %}
+    <h2>Каталог цветов</h2>
+
+    <!-- Форма поиска и фильтров -->
+    <form method="get" class="filters">
+        <p>
+            <label>Поиск:</label>
+            <input type="text" name="q" value="{{ query }}" placeholder="Название цветка...">
+        </p>
+
+        <p>
+            <label>Категория:</label>
+            <select name="category">
+                <option value="">Все категории</option>
+                {% for cat in categories %}
+                    <option value="{{ cat.slug }}" {% if cat.slug == selected_category %}selected{% endif %}>
+                        {{ cat.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </p>
+
+        <p>
+            <label>Цена от:</label>
+            <input type="number" name="price_from" value="{{ price_from }}" min="0">
+
+            <label>до:</label>
+            <input type="number" name="price_to" value="{{ price_to }}" min="0">
+        </p>
+
+        <p>
+            <button type="submit">Применить</button>
+            <a href="{% url 'catalog' %}">Сбросить</a>
+        </p>
+    </form>
+
+    <hr>
+
+    <p>Найдено товаров: {{ flowers|length }}</p>
+
+    <div class="catalog">
+        {% for flower in flowers %}
+            <div class="card">
+    <img src="{% static 'images/' %}{{ flower.image }}" alt="{{ flower.name }}">
+    <h3>{{ flower.name }}</h3>
+    <p>{{ flower.price }} ₽</p>
+    
+    <div class="card-actions">
+        <a href="{% url 'add_to_cart' flower.id %}" class="btn-small">В корзину</a>
+        <a href="{% url 'product' flower.id %}" class="link-more">Подробнее</a>
+    </div>
+</div>
+        {% empty %}
+            <p>Ничего не найдено. Попробуйте изменить условия поиска.</p>
+        {% endfor %}
+    </div>
+{% endblock %}

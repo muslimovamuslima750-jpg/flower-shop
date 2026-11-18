@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}الزهور{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <div class="header-top">
+            <div class="logo-block">
+                <h1>🌸 الزهور</h1>
+                <p class="slogan">Остатки рая на земле</p>
+            </div>
+            <div class="contacts-block">
+                <p>📞 +7 (999) 123-45-67</p>
+                <p>✉️ info@alzuhur.ru</p>
+            </div>
+        </div>
+
+        
+            <nav>
+    <a href="{% url 'index' %}" {% if request.resolver_match.url_name == 'index' %}class="active"{% endif %}>Главная</a>
+    
+    <a href="{% url 'catalog' %}" {% if request.resolver_match.url_name == 'catalog' or request.resolver_match.url_name == 'product' %}class="active"{% endif %}>Каталог</a>
+    
+    <a href="{% url 'cart' %}" {% if request.resolver_match.url_name == 'cart' or request.resolver_match.url_name == 'checkout' %}class="active"{% endif %}>Корзина</a>
+    
+    <a href="{% url 'about' %}" {% if request.resolver_match.url_name == 'about' %}class="active"{% endif %}>О нас</a>
+    
+    <a href="{% url 'contacts' %}" {% if request.resolver_match.url_name == 'contacts' %}class="active"{% endif %}>Контакты</a>
+</nav>
+        
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+       <footer>
+        <div class="footer-content">
+            <div>
+                <p><strong>الزهور</strong> — магазин цветов</p>
+                <p>Остатки рая на земле</p>
+            </div>
+            <div>
+                <p><a href="{% url 'privacy' %}" style="color: #888; text-decoration: underline;">Политика конфиденциальности</a></p>
+                <p>© 2026 الزهور. Учебный проект.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

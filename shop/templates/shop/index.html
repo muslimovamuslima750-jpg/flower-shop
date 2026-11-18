@@ -1,0 +1,58 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}Главная — الزهور{% endblock %}
+
+{% block content %}
+
+    <!-- Баннер -->
+    <section class="hero">
+        <div class="hero-text">
+            <h2>Цветы, которые говорят за вас</h2>
+            <p>Свежие букеты с доставкой в день заказа</p>
+            <a href="{% url 'catalog' %}" class="btn">Перейти в каталог</a>
+        </div>
+    </section>
+
+       <!-- Преимущества -->
+    <section class="features">
+        <div class="feature">
+            <img src="{% static 'images/icon-fresh.png' %}" alt="Свежие цветы" class="feature-icon-img">
+            <h3>Свежие цветы</h3>
+            <p>Каждый букет собираем в день доставки</p>
+        </div>
+        <div class="feature">
+            <img src="{% static 'images/icon-delivery.png' %}" alt="Быстрая доставка" class="feature-icon-img">
+            <h3>Быстрая доставка</h3>
+            <p>Доставим по городу в течение 2 часов</p>
+        </div>
+        <div class="feature">
+            <img src="{% static 'images/icon-bouquet.png' %}" alt="Авторские букеты" class="feature-icon-img">
+            <h3>Авторские букеты</h3>
+            <p>Собираем композиции под ваш повод</p>
+        </div>
+    </section>
+
+    <!-- Популярные товары -->
+    <section class="popular">
+        <h2>Популярные букеты</h2>
+        <div class="catalog">
+            {% for flower in popular %}
+                <div class="card">
+    <img src="{% static 'images/' %}{{ flower.image }}" alt="{{ flower.name }}">
+    <h3>{{ flower.name }}</h3>
+    <p>{{ flower.price }} ₽</p>
+    
+    <div class="card-actions">
+        <a href="{% url 'add_to_cart' flower.id %}" class="btn-small">В корзину</a>
+        <a href="{% url 'product' flower.id %}" class="link-more">Подробнее</a>
+    </div>
+</div>
+            {% endfor %}
+        </div>
+        <p style="text-align:center; margin-top: 20px;">
+            <a href="{% url 'catalog' %}" class="btn">Смотреть все букеты</a>
+        </p>
+    </section>
+
+{% endblock %}

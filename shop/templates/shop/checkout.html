@@ -1,0 +1,32 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Оформление заказа — الزهور{% endblock %}
+
+{% block content %}
+    <h2>Оформление заказа</h2>
+
+    {% if items %}
+        <div class="checkout">
+            <div class="checkout-summary">
+                <h3>Ваш заказ:</h3>
+                <ul>
+                    {% for item in items %}
+                        <li>{{ item.flower.name }} × {{ item.quantity }} — {{ item.summa }} ₽</li>
+                    {% endfor %}
+                </ul>
+                <p class="checkout-total"><strong>Итого: {{ total }} ₽</strong></p>
+            </div>
+
+            <div class="checkout-form">
+                <h3>Данные для доставки:</h3>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Оформить заказ</button>
+                </form>
+            </div>
+        </div>
+    {% else %}
+        <p>Корзина пуста. <a href="{% url 'catalog' %}">Перейти в каталог</a></p>
+    {% endif %}
+{% endblock %}
